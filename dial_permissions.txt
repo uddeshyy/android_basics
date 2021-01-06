@@ -1,0 +1,17 @@
+ EditText etStatus = findViewById(R.id.textView);
+        Button btn = findViewById(R.id.button);
+        btn.setOnClickListener(v -> {
+           int perm =  ContextCompat.checkSelfPermission(MainActivity.this,
+                    Manifest.permission.CALL_PHONE);
+           if(perm == PackageManager.PERMISSION_GRANTED){
+               String telNo = etStatus.getText().toString();
+               Uri uri = Uri.parse("tel:" + telNo);
+               Intent intent = new Intent(Intent.ACTION_CALL,uri);
+               startActivity(intent);
+           } else {
+               ActivityCompat.requestPermissions(MainActivity.this,
+                       new String[]{Manifest.permission.CALL_PHONE},
+                       121
+               );
+           }
+        });
