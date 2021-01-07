@@ -1,0 +1,28 @@
+        Button button = findViewById(R.id.button);
+        NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel = new NotificationChannel("first","default",NotificationManager.IMPORTANCE_HIGH);
+            channel.enableLights(true);
+            channel.enableVibration(true);
+            nm.createNotificationChannel(channel);
+        }
+        button.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("https://www.google.co.in"));
+            PendingIntent pi = PendingIntent.getActivity(this,121,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+            Notification.Builder builder = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ?
+                    new Notification.Builder(MainActivity.this, "first") :
+                    new Notification.Builder(this)
+                            .setPriority(Notification.PRIORITY_MAX)
+                            .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_LIGHTS);
+
+            Notification notificationCompat = builder
+                        .addAction(R.drawable.ic_launcher_foreground,"Click Me",pi)
+                        .setAutoCancel(true)
+                        .setContentTitle("Simple Notification")
+                        .setContentText("This is the description inside a Notification")
+                        .setSmallIcon(R.drawable.ic_launcher_foreground)
+                        .build();
+            nm.notify(1,notificationCompat);
+        });
