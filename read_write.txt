@@ -1,0 +1,45 @@
+	Button btnRead = findViewById(R.id.btnRead);
+        Button btnWrite = findViewById(R.id.btnWrite);
+        EditText eText = findViewById(R.id.eText);
+        TextView tView = findViewById(R.id.tView);
+        btnWrite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String text = eText.getText().toString();
+                File dataDir = ContextCompat.getDataDir(getBaseContext());
+                File file = new File(dataDir,"file.txt");
+                try {
+                    FileOutputStream fos = new FileOutputStream(file);
+                    fos.write(text.getBytes());
+                } catch (FileNotFoundException e) {
+                    Toast.makeText(MainActivity.this, "File not found", Toast.LENGTH_SHORT).show();
+                } catch (IOException e){
+                    Toast.makeText(MainActivity.this, "File cannot be written", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        btnRead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                File dataDir = ContextCompat.getDataDir(getBaseContext());
+                File file = new File(dataDir,"file.txt");
+
+                try {
+                    FileInputStream fis = new FileInputStream(file);
+                    BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+                    StringBuilder sb = new StringBuilder();
+                    String buffer = br.readLine();
+                    while (buffer != null){
+                        sb.append(buffer);
+                        buffer = br.readLine();
+                    }
+                    tView.setText(sb.toString());
+
+                } catch (FileNotFoundException e) {
+                    Toast.makeText(MainActivity.this, "File not found", Toast.LENGTH_SHORT).show();
+                }catch(IOException e){
+                    Toast.makeText(MainActivity.this, "File cannot be read", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
