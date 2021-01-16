@@ -1,0 +1,32 @@
+View view = findViewById(R.id.background);
+        Button btnRed = findViewById(R.id.btnRed);
+        Button btnBlue = findViewById(R.id.btnBlue);
+        Button btnGreen = findViewById(R.id.btnGreen);
+        SharedPreferences sPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sPref.edit();
+        view.setBackgroundColor(sPref.getInt("COLOR",Color.WHITE));
+       
+        btnRed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setBackgroundColor(Color.RED);
+                editor.putInt("COLOR", Color.RED);
+                editor.apply();
+            }
+        });
+        btnBlue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setBackgroundColor(Color.BLUE);
+                editor.putInt("COLOR", Color.BLUE);
+                editor.apply();
+            }
+        });
+        btnGreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setBackgroundColor(Color.GREEN);
+                editor.putInt("COLOR", Color.GREEN);
+                editor.apply();
+            }
+        });
