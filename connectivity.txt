@@ -1,7 +1,0 @@
- TextView tvStatus = findViewById(R.id.textView);
-        Button btn = findViewById(R.id.button);
-        btn.setOnClickListener(v -> {
-            ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-            NetworkInfo info = cm.getActiveNetworkInfo();
-            boolean isConnected = info != null && info.isConnected();
-            tvStatus.setText(isConnected ? "Connected" : "Disconnected");
